@@ -1,126 +1,39 @@
 import React, { useState } from "react";
-import { base44 } from "@/stargazers/api/base44Client";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/stargazers/components/ui/card";
+import { Card, CardContent } from "@/stargazers/components/ui/card";
 import { Button } from "@/stargazers/components/ui/button";
 import { Input } from "@/stargazers/components/ui/input";
-import { Stars, Plus, Trash2, Volume2, Search, ZoomIn } from "lucide-react";
+import { Stars, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/stargazers/utils";
 import ConstellationFormDialog from "@/stargazers/components/constellations/ConstellationFormDialog";
 import ImageModal from "@/stargazers/components/ImageModal";
 
 export default function Constellations() {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [selectedConstellation, setSelectedConstellation] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState({ url: "", title: "" });
-  const [playingAudio, setPlayingAudio] = useState(null);
 
-  const { data: constellations, isLoading } = useQuery({
-    queryKey: ['constellations'],
-    queryFn: async () => {
-      const data = await base44.entities.Constellation.list();
-      return data.sort((a, b) => a.hawaiian_name.localeCompare(b.hawaiian_name));
-    },
-    initialData: [],
-  });
-
+  const constellations = [];
   const constellationIconUrl = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/690537046186188fdedaa7d0/956757e39_IMG_2167.jpeg";
-
-  const createMutation = useMutation({
-    mutationFn: (data) => base44.entities.Constellation.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['constellations'] });
-      setShowForm(false);
-      setSelectedConstellation(null);
-    },
-  });
-
-  const updateMutation = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.Constellation.update(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['constellations'] });
-      setShowForm(false);
-      setSelectedConstellation(null);
-    },
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.Constellation.delete(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['constellations'] });
-    },
-  });
-
-  const audioCache = React.useRef({});
-
-  React.useEffect(() => {
-    constellations.forEach(constellation => {
-      if (constellation.pronunciation_audio_url && !audioCache.current[constellation.id]) {
-        const audio = new Audio(constellation.pronunciation_audio_url);
-        audio.preload = 'auto';
-        audioCache.current[constellation.id] = audio;
-      }
-    });
-  }, [constellations]);
-
-  const playPronunciation = (audioUrl, constellationId) => {
-    if (audioUrl && playingAudio !== constellationId) {
-      const audio = audioCache.current[constellationId];
-      if (audio) {
-        setPlayingAudio(constellationId);
-        audio.currentTime = 0;
-        audio.onended = () => setPlayingAudio(null);
-        audio.onerror = () => setPlayingAudio(null);
-        audio.play();
-      }
-    }
-  };
-
-  const handleSave = (data) => {
-    if (selectedConstellation) {
-      updateMutation.mutate({ id: selectedConstellation.id, data });
-    } else {
-      createMutation.mutate(data);
-    }
-  };
-
-  const handleEdit = (constellation) => {
-    setSelectedConstellation(constellation);
-    setShowForm(true);
-  };
-
-  const handleDelete = (id) => {
-    if (confirm('Remove this constellation from the guide?')) {
-      deleteMutation.mutate(id);
-    }
-  };
-
-  const handleImageClick = (imageUrl, constellationName) => {
-    setSelectedImage({ url: imageUrl, title: constellationName });
-    setImageModalOpen(true);
-  };
 
   const filteredConstellations = constellations.filter(constellation => {
     const query = searchQuery.toLowerCase();
     return (
       constellation.hawaiian_name?.toLowerCase().includes(query) ||
       constellation.english_name?.toLowerCase().includes(query) ||
-      constellation.meaning?.toLowerCase().includes(query) ||
-      constellation.mythology?.toLowerCase().includes(query)
+      constellation.meaning?.toLowerCase().includes(query)
     );
   });
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div className="text-center md:text-left">
           <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white/20 mx-auto md:mx-0 mb-4">
+<<<<<<< HEAD:src/pages/Constellations.jsx
             <img
               src={constellationIconUrl}
               alt="Constellation"
@@ -133,10 +46,15 @@ export default function Constellations() {
           <p className="text-white/70 text-lg">
             Hawaiian star patterns and their navigation significance
           </p>
+=======
+            <img src={constellationIconUrl} alt="Constellation" className="w-full h-full object-cover" />
+          </div>
+          <h1 className="text-4xl font-bold text-white mb-2">Constellation Guide</h1>
+          <p className="text-white/70 text-lg">Hawaiian star patterns and their navigation significance</p>
+>>>>>>> 70ebdd8675637225f841b126e6c52aec3b9b7c08:src/stargazers/pages/Constellations.jsx
         </div>
       </div>
 
-      {/* Search Bar */}
       <div className="mb-8">
         <div className="relative max-w-2xl">
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
@@ -150,53 +68,51 @@ export default function Constellations() {
         </div>
       </div>
 
-      {/* Introduction */}
       <Card className="mb-12 bg-gradient-to-br from-white/10 to-white/5 border-white/20 backdrop-blur-sm">
         <CardContent className="p-8">
           <p className="text-white/90 text-xl leading-relaxed">
+<<<<<<< HEAD:src/pages/Constellations.jsx
             Constellations served as celestial roadmaps for Hawaiian navigators, helping them
             maintain course across thousands of miles of open ocean. Each constellation had its
             own name, mythology, and practical navigation use, passed down through generations
             of wayfinders.
+=======
+            Constellations served as celestial roadmaps for Hawaiian navigators, helping them 
+            maintain course across thousands of miles of open ocean.
+>>>>>>> 70ebdd8675637225f841b126e6c52aec3b9b7c08:src/stargazers/pages/Constellations.jsx
           </p>
         </CardContent>
       </Card>
 
-      {/* Constellations List */}
-      {isLoading ? (
-        <div className="space-y-4">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-48 bg-white/10 rounded-3xl animate-pulse" />
-          ))}
-        </div>
-      ) : filteredConstellations.length === 0 ? (
+      {filteredConstellations.length === 0 && (
         <Card className="bg-white/5 border-white/20">
           <CardContent className="p-12 text-center">
             <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white/20 mx-auto mb-4 opacity-30">
+<<<<<<< HEAD:src/pages/Constellations.jsx
               <img
                 src={constellationIconUrl}
                 alt="Constellation"
                 className="w-full h-full object-cover"
               />
+=======
+              <img src={constellationIconUrl} alt="Constellation" className="w-full h-full object-cover" />
+>>>>>>> 70ebdd8675637225f841b126e6c52aec3b9b7c08:src/stargazers/pages/Constellations.jsx
             </div>
             <h3 className="text-xl text-white mb-2">
               {searchQuery ? "No constellations found" : "No constellations yet"}
             </h3>
             <p className="text-white/60 mb-6">
+<<<<<<< HEAD:src/pages/Constellations.jsx
               {searchQuery
                 ? "Try a different search term"
                 : "Start building your Hawaiian constellation guide"}
+=======
+              {searchQuery ? "Try a different search term" : "Connect a backend to start building your constellation guide"}
+>>>>>>> 70ebdd8675637225f841b126e6c52aec3b9b7c08:src/stargazers/pages/Constellations.jsx
             </p>
-            {!searchQuery && (
-              <Button
-                onClick={() => setShowForm(true)}
-                className="bg-gradient-to-r from-blue-500 to-blue-600"
-              >
-                Add Your First Constellation
-              </Button>
-            )}
           </CardContent>
         </Card>
+<<<<<<< HEAD:src/pages/Constellations.jsx
       ) : (
         <div className="space-y-4">
           {filteredConstellations.map((constellation) => (
@@ -350,29 +266,33 @@ export default function Constellations() {
             </Card>
           ))}
         </div>
+=======
+>>>>>>> 70ebdd8675637225f841b126e6c52aec3b9b7c08:src/stargazers/pages/Constellations.jsx
       )}
 
-      {/* Cultural Note */}
       <Card className="mt-12 bg-gradient-to-br from-[#3B82F6]/20 to-[#60A5FA]/20 border-[#60A5FA]/30">
         <CardContent className="p-6">
           <p className="text-white/90 italic leading-relaxed">
+<<<<<<< HEAD:src/pages/Constellations.jsx
             "The stars served as a celestial map, with constellations marking key directions
             and latitudes. Master navigators memorized the rising and setting positions of
             entire star groups, creating a mental framework that guided voyages across the Pacific."
+=======
+            "The stars served as a celestial map, with constellations marking key directions 
+            and latitudes."
+>>>>>>> 70ebdd8675637225f841b126e6c52aec3b9b7c08:src/stargazers/pages/Constellations.jsx
           </p>
         </CardContent>
       </Card>
 
-      {/* Form Dialog */}
       <ConstellationFormDialog
         open={showForm}
         onOpenChange={setShowForm}
         constellation={selectedConstellation}
-        onSave={handleSave}
-        isLoading={createMutation.isPending || updateMutation.isPending}
+        onSave={() => setShowForm(false)}
+        isLoading={false}
       />
 
-      {/* Image Modal */}
       <ImageModal
         open={imageModalOpen}
         onOpenChange={setImageModalOpen}
