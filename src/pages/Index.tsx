@@ -6,13 +6,13 @@ const Index = () => {
       <h1 className="text-6xl font-bold text-foreground text-center">Hello, World! 👋</h1>
       <Link 
         to="/alchemy" 
-        className="px-6 py-3 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-500 transition-colors"
+        className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-bold hover:opacity-90 transition-opacity"
       >
         Go to Alchemy API Monitor
       </Link>
       <Link 
         to="/stargazers" 
-        className="px-6 py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-500 transition-colors"
+        className="px-6 py-3 bg-accent text-accent-foreground rounded-lg font-bold hover:opacity-90 transition-opacity"
       >
         Go to Stargazers
       </Link>
