@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import { Card, CardContent } from "@/stargazers/components/ui/card";
 import { Button } from "@/stargazers/components/ui/button";
 import { Info, RotateCw, ZoomIn } from "lucide-react";
-import { base44 } from "@/stargazers/api/base44Client";
 import PlanisphereModal from "@/stargazers/components/PlanisphereModal";
 
 const NORTH_IMAGE = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/690537046186188fdedaa7d0/00c0a4101_appnothr.png";
