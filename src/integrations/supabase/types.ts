@@ -14,7 +14,147 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      constellations: {
+        Row: {
+          best_viewing_months: string | null
+          created_at: string
+          english_name: string | null
+          hawaiian_name: string
+          id: string
+          image_url: string | null
+          meaning: string | null
+          mythology: string | null
+          navigation_use: string | null
+          pronunciation_audio_url: string | null
+          stars_description: string | null
+          updated_at: string
+        }
+        Insert: {
+          best_viewing_months?: string | null
+          created_at?: string
+          english_name?: string | null
+          hawaiian_name: string
+          id?: string
+          image_url?: string | null
+          meaning?: string | null
+          mythology?: string | null
+          navigation_use?: string | null
+          pronunciation_audio_url?: string | null
+          stars_description?: string | null
+          updated_at?: string
+        }
+        Update: {
+          best_viewing_months?: string | null
+          created_at?: string
+          english_name?: string | null
+          hawaiian_name?: string
+          id?: string
+          image_url?: string | null
+          meaning?: string | null
+          mythology?: string | null
+          navigation_use?: string | null
+          pronunciation_audio_url?: string | null
+          stars_description?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      planets: {
+        Row: {
+          created_at: string
+          description: string | null
+          english_name: string | null
+          hawaiian_name: string
+          id: string
+          image_url: string | null
+          meaning: string | null
+          mythology: string | null
+          pronunciation_audio_url: string | null
+          type: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          english_name?: string | null
+          hawaiian_name: string
+          id?: string
+          image_url?: string | null
+          meaning?: string | null
+          mythology?: string | null
+          pronunciation_audio_url?: string | null
+          type?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          english_name?: string | null
+          hawaiian_name?: string
+          id?: string
+          image_url?: string | null
+          meaning?: string | null
+          mythology?: string | null
+          pronunciation_audio_url?: string | null
+          type?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      stars: {
+        Row: {
+          best_viewing_months: string | null
+          brightness: number | null
+          constellation: string | null
+          created_at: string
+          description: string | null
+          distance_light_years: number | null
+          english_name: string | null
+          hawaiian_name: string
+          id: string
+          image_url: string | null
+          meaning: string | null
+          mythology: string | null
+          navigation_use: string | null
+          pronunciation_audio_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          best_viewing_months?: string | null
+          brightness?: number | null
+          constellation?: string | null
+          created_at?: string
+          description?: string | null
+          distance_light_years?: number | null
+          english_name?: string | null
+          hawaiian_name: string
+          id?: string
+          image_url?: string | null
+          meaning?: string | null
+          mythology?: string | null
+          navigation_use?: string | null
+          pronunciation_audio_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          best_viewing_months?: string | null
+          brightness?: number | null
+          constellation?: string | null
+          created_at?: string
+          description?: string | null
+          distance_light_years?: number | null
+          english_name?: string | null
+          hawaiian_name?: string
+          id?: string
+          image_url?: string | null
+          meaning?: string | null
+          mythology?: string | null
+          navigation_use?: string | null
+          pronunciation_audio_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
