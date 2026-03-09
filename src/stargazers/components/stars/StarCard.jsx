@@ -1,0 +1,214 @@
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/stargazers/components/ui/card";
+import { Button } from "@/stargazers/components/ui/button";
+import { Star, Edit, Trash2, Navigation, ArrowRight, Volume2 } from "lucide-react";
+
+export default function StarCard({ star, onEdit, onDelete, id }) {
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const audioRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (star.pronunciation_audio_url) {
+      audioRef.current = new Audio(star.pronunciation_audio_url);
+      audioRef.current.preload = 'auto';
+      audioRef.current.onended = () => setIsPlaying(false);
+      audioRef.current.onerror = () => setIsPlaying(false);
+    }
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, [star.pronunciation_audio_url]);
+
+  const playPronunciation = (e) => {
+    e.stopPropagation();
+    if (audioRef.current && !isPlaying) {
+      setIsPlaying(true);
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+    }
+  };
+
+  const handleCardClick = () => {
+    // Save to sessionStorage before navigating
+    try {
+      sessionStorage.setItem('lastViewedStarId', String(star.id));
+    } catch (e) {
+      console.error('Failed to save star ID', e);
+    }
+    // Construct proper URL - keep everything before the last slash, then add StarDetail
+    const pathParts = window.location.pathname.split('/').filter(p => p);
+    pathParts[pathParts.length - 1] = 'StarDetail';
+    const newPath = '/' + pathParts.join('/');
+    console.log('Navigating to:', `${newPath}?id=${star.id}`);
+    window.location.href = `${newPath}?id=${star.id}`;
+  };
+
+  // Calculate icon size based on brightness (magnitude)
+  // Lower magnitude = brighter star = larger icon
+  // Higher magnitude = dimmer star = smaller icon
+  const getIconSize = () => {
+    if (star.brightness === null || star.brightness === undefined) {
+      return "w-10 h-10"; // Default size
+    }
+    
+    const magnitude = star.brightness;
+    
+    if (magnitude < -1) {
+      return "w-16 h-16"; // Exceptionally bright (e.g., Venus)
+    } else if (magnitude < 0) {
+      return "w-14 h-14"; // Very bright (e.g., Sirius)
+    } else if (magnitude < 1) {
+      return "w-12 h-12"; // Bright
+    } else if (magnitude < 2) {
+      return "w-10 h-10"; // Moderately bright
+    } else if (magnitude < 3) {
+      return "w-8 h-8"; // Moderate
+    } else if (magnitude < 4) {
+      return "w-6 h-6"; // Dimmer
+    } else {
+      return "w-5 h-5"; // Dimmest
+    }
+  };
+
+  const iconSize = getIconSize();
+
+  return (
+    <Card id={id} className="bg-gradient-to-br from-white/10 to-white/5 border-white/20 backdrop-blur-sm hover:scale-105 transition-all group">
+      <div onClick={handleCardClick} className="cursor-pointer">
+        <CardHeader className="pb-3">
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-3 flex-1">
+              <div className={`${iconSize} rounded-full overflow-hidden border-2 border-white/20 flex-shrink-0 transition-all`} style={{ backgroundColor: '#000' }}>
+                <img 
+                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/690537046186188fdedaa7d0/5e18e74fc_IMG_2150.jpeg"
+                  alt="Star"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <CardTitle className="text-white text-lg group-hover:text-[#60A5FA] transition-colors">
+                    {star.hawaiian_name}
+                  </CardTitle>
+                  {star.pronunciation_audio_url && (
+                    <button
+                      onClick={playPronunciation}
+                      disabled={isPlaying}
+                      className={`transition-all ${
+                        isPlaying 
+                          ? 'text-white scale-90' 
+                          : 'text-[#0EA5E9] hover:text-[#60A5FA] active:text-white active:scale-90'
+                      }`}
+                      title="Play pronunciation"
+                    >
+                      <Volume2 className="w-8 h-8" />
+                    </button>
+                  )}
+                </div>
+                <p className="text-white/60 text-base">{star.english_name}</p>
+              </div>
+              <ArrowRight className="w-5 h-5 text-white/30 group-hover:text-[#60A5FA] group-hover:translate-x-1 transition-all" />
+            </div>
+          </div>
+        </CardHeader>
+        
+        <CardContent className="space-y-4">
+          {star.meaning && (
+            <div>
+              <p className="text-white/50 text-xs uppercase tracking-wider mb-1">
+                Meaning
+              </p>
+              <p className="text-white/90 text-base leading-relaxed line-clamp-2">
+                {star.meaning}
+              </p>
+            </div>
+          )}
+
+          {star.navigation_use && (
+            <div className="flex gap-2 items-start p-3 rounded-lg bg-white/5 border border-white/10">
+              <Navigation className="w-4 h-4 text-[#3B82F6] mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-white/50 text-xs uppercase tracking-wider mb-1">
+                  Navigation Use
+                </p>
+                <p className="text-white/80 text-base line-clamp-2">
+                  {star.navigation_use}
+                </p>
+              </div>
+            </div>
+          )}
+          
+          <div className="flex items-center justify-between pt-2 border-t border-white/10">
+            <div className="flex gap-4 flex-1 flex-wrap">
+              {star.constellation && (
+                <div>
+                  <span className="text-white/50 text-xs">Constellation</span>
+                  <p className="text-white/80 text-base font-medium">
+                    {star.constellation}
+                  </p>
+                </div>
+              )}
+
+              {star.brightness !== undefined && star.brightness !== null && (
+                <div>
+                  <span className="text-white/50 text-xs">Magnitude</span>
+                  <p className="text-white/80 text-base font-medium">
+                    {star.brightness.toFixed(2)}
+                  </p>
+                </div>
+              )}
+
+              {star.distance_light_years !== undefined && star.distance_light_years !== null && (
+                <div>
+                  <span className="text-white/50 text-xs">Distance</span>
+                  <p className="text-white/80 text-base font-medium">
+                    {star.distance_light_years.toLocaleString()} ly
+                  </p>
+                </div>
+              )}
+
+              {star.best_viewing_months && (
+                <div>
+                  <span className="text-white/50 text-xs">Best Viewing</span>
+                  <p className="text-white/80 text-base">
+                    {star.best_viewing_months}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </div>
+      
+      <CardContent className="pt-0">
+        <div className="flex gap-1 justify-end">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit();
+            }}
+            className="text-white/70 hover:text-white hover:bg-white/10"
+          >
+            <Edit className="w-4 h-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete();
+            }}
+            className="text-white/70 hover:text-red-400 hover:bg-white/10"
+          >
+            <Trash2 className="w-4 h-4" />
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}

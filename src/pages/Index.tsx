@@ -10,6 +10,12 @@ const Index = () => {
       >
         Go to Alchemy API Monitor
       </Link>
+      <Link 
+        to="/stargazers" 
+        className="px-6 py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-500 transition-colors"
+      >
+        Go to Stargazers
+      </Link>
     </div>
   );
 };
