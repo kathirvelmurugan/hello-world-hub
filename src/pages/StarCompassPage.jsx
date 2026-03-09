@@ -5,9 +5,9 @@ import { Button } from "@/stargazers/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/stargazers/utils";
-import StarCompass from "../components/wayfinding/StarCompass";
-import StarCards from "../components/wayfinding/StarCards";
-import { seasons } from "../components/wayfinding/starCompassData";
+import StarCompass from "@/stargazers/components/wayfinding/StarCompass";
+import StarCards from "@/stargazers/components/wayfinding/StarCards";
+import { seasons } from "@/stargazers/components/wayfinding/starCompassData";
 
 export default function StarCompassPage() {
   const [selectedSeason, setSelectedSeason] = useState("both");
@@ -28,7 +28,7 @@ export default function StarCompassPage() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden border-4 border-[#60A5FA] shadow-xl">
-          <img 
+          <img
             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/690537046186188fdedaa7d0/ef2ab54ff_88290786-1D97-4C44-BD28-745977014920.png"
             alt="Star Compass"
             className="w-full h-full object-cover"
@@ -46,11 +46,11 @@ export default function StarCompassPage() {
       <Card className="bg-gradient-to-br from-white/10 to-white/5 border-white/20 backdrop-blur-sm mb-8">
         <CardContent className="p-6">
           <p className="text-white/90 leading-relaxed">
-            The Hawaiian star compass divides the horizon into 32 equal sections called "houses." 
-            Each house marks where specific stars rise and set throughout the year. By memorizing 
-            these star paths, navigators could maintain direction across thousands of miles of open ocean. 
-            These stars are used to teach direction and house positions, not seasonal night navigation. 
-            They may rise or set in twilight or dawn. Click on any section of the compass to learn about 
+            The Hawaiian star compass divides the horizon into 32 equal sections called "houses."
+            Each house marks where specific stars rise and set throughout the year. By memorizing
+            these star paths, navigators could maintain direction across thousands of miles of open ocean.
+            These stars are used to teach direction and house positions, not seasonal night navigation.
+            They may rise or set in twilight or dawn. Click on any section of the compass to learn about
             that house, or select a cardinal direction below to explore all houses in that quadrant.
           </p>
         </CardContent>
@@ -89,7 +89,7 @@ export default function StarCompassPage() {
           Key Navigation Stars
         </h2>
         <p className="text-white/70 mb-6">
-          {selectedSeason === "both" 
+          {selectedSeason === "both"
             ? "Major stars and their navigational significance throughout the year"
             : `Stars active during ${seasons.find(s => s.id === selectedSeason)?.name}`
           }

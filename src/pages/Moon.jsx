@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/stargazers/components/ui/card";
 import { Input } from "@/stargazers/components/ui/input";
 import { Moon as MoonIcon, Search, Volume2 } from "lucide-react";
-import MoonPhaseIcon from "../components/MoonPhaseIcon";
+import MoonPhaseIcon from "@/stargazers/components/MoonPhaseIcon";
 
 const lunarMonths = [
   { name: "Makaliʻi", meaning: "Eyes of the Chief", description: "November-December. A time of cool weather and calm seas." },

@@ -6,8 +6,8 @@ import { Badge } from "@/stargazers/components/ui/badge";
 import { Input } from "@/stargazers/components/ui/input";
 import { Button } from "@/stargazers/components/ui/button";
 import { Globe, Volume2, Search, Plus, Edit, Trash2, Sparkles, ZoomIn } from "lucide-react";
-import PlanetFormDialog from "../components/planets/PlanetFormDialog";
-import ImageModal from "../components/ImageModal";
+import PlanetFormDialog from "@/stargazers/components/planets/PlanetFormDialog";
+import ImageModal from "@/stargazers/components/ImageModal";
 
 export default function Planets() {
   const queryClient = useQueryClient();

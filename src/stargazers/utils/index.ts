@@ -2,5 +2,6 @@
 
 
 export function createPageUrl(pageName: string) {
-    return '/' + pageName.toLowerCase().replace(/ /g, '-');
+    if (pageName === 'Home') return '/stargazers';
+    return '/stargazers/' + pageName.toLowerCase().replace(/ /g, '-');
 }

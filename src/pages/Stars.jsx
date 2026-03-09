@@ -5,8 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/stargazers/component
 import { Button } from "@/stargazers/components/ui/button";
 import { Input } from "@/stargazers/components/ui/input";
 import { Star, Sparkles, Plus, Search } from "lucide-react";
-import StarCard from "../components/stars/StarCard";
-import StarFormDialog from "../components/stars/StarFormDialog";
+import StarCard from "@/stargazers/components/stars/StarCard";
+import StarFormDialog from "@/stargazers/components/stars/StarFormDialog";
 
 export default function Stars() {
   const [selectedStar, setSelectedStar] = useState(null);

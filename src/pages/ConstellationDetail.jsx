@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/stargazers/components/ui/card";
 import { Button } from "@/stargazers/components/ui/button";
 import { ArrowLeft, Volume2, ZoomIn } from "lucide-react";
-import ImageModal from "../components/ImageModal";
+import ImageModal from "@/stargazers/components/ImageModal";
 import { createPageUrl } from "@/stargazers/utils";
 
 export default function ConstellationDetail() {

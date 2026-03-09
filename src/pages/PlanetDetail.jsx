@@ -6,7 +6,7 @@ import { Button } from "@/stargazers/components/ui/button";
 import { ArrowLeft, Globe, Volume2, Sparkles, ZoomIn } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/stargazers/utils";
-import ImageModal from "../components/ImageModal";
+import ImageModal from "@/stargazers/components/ImageModal";
 
 export default function PlanetDetail() {
   const navigate = useNavigate();

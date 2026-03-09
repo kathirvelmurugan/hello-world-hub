@@ -5,7 +5,7 @@ import { Sunrise, Sunset, Sparkles } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/stargazers/components/ui/card";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/stargazers/utils";
-import MoonPhaseIcon from "../components/MoonPhaseIcon";
+import MoonPhaseIcon from "@/stargazers/components/MoonPhaseIcon";
 
 // Accurate moon phase calculation using cosine formula
 const calculateMoonPhase = (date = new Date()) => {
