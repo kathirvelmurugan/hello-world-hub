@@ -62,7 +62,7 @@ serve(async (req) => {
     } catch (err) {
         status = 'DOWN'
         responseTime = Date.now() - startTime
-        errorMessage = err.message
+        errorMessage = (err as Error).message
         errorType = 'Network Failure'
     }
 
