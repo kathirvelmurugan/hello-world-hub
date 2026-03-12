@@ -1,3 +1,4 @@
+import "./index.css";
 import { Toaster } from "@/stargazers/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/stargazers/lib/query-client'
@@ -9,7 +10,6 @@ import { setupIframeMessaging } from '@/stargazers/lib/iframe-messaging';
 import PageNotFound from '@/stargazers/lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/stargazers/lib/AuthContext';
 import UserNotRegisteredError from '@/stargazers/components/UserNotRegisteredError';
-
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
 const MainPage = mainPageKey ? Pages[mainPageKey] : () => <></>;
@@ -45,15 +45,19 @@ const AuthenticatedApp = () => {
 
     // Render the main app
     return (
-        <LayoutWrapper currentPageName={mainPageKey}>
-            <Routes>
-                <Route index element={<MainPage />} />
-                {Object.entries(Pages).map(([path, Page]) => (
-                    <Route key={path} path={path.toLowerCase().replace("detail", "/:id")} element={<Page />} />
-                ))}
-                <Route path="*" element={<PageNotFound />} />
-            </Routes>
-        </LayoutWrapper>
+        <div className="dark">
+            <LayoutWrapper currentPageName={mainPageKey}>
+                <Routes>
+                    <Route index element={<MainPage />} />
+                    {Object.entries(Pages).map(([path, Page]) => (
+                        <Route key={path} path={path.toLocaleLowerCase().replace("detail", "")} element={<Page />} />
+                    ))}
+
+
+                    <Route path="*" element={<PageNotFound />} />
+                </Routes>
+            </LayoutWrapper>
+        </div>
     );
 };
 

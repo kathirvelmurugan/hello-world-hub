@@ -1,15 +1,15 @@
-import ConstellationDetail from '../pages/ConstellationDetail';
-import Constellations from '../pages/Constellations';
-import Home from '../pages/Home';
-import Moon from '../pages/Moon';
-import PlanetDetail from '../pages/PlanetDetail';
-import Planets from '../pages/Planets';
-import SacredCalabash from '../pages/SacredCalabash';
-import SkyMap from '../pages/SkyMap';
-import StarCompassPage from '../pages/StarCompassPage';
-import StarDetail from '../pages/StarDetail';
-import Stars from '../pages/Stars';
-import Wayfinding from '../pages/Wayfinding';
+import ConstellationDetail from './pages/ConstellationDetail';
+import Constellations from './pages/Constellations';
+import Home from './pages/Home';
+import Moon from './pages/Moon';
+import PlanetDetail from './pages/PlanetDetail';
+import Planets from './pages/Planets';
+import SacredCalabash from './pages/SacredCalabash';
+import SkyMap from './pages/SkyMap';
+import StarCompassPage from './pages/StarCompassPage';
+import StarDetail from './pages/StarDetail';
+import Stars from './pages/Stars';
+import Wayfinding from './pages/Wayfinding';
 import __Layout from './Layout.jsx';
 
 

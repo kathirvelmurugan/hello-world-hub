@@ -2,6 +2,7 @@
 
 
 export function createPageUrl(pageName: string) {
-    if (pageName === 'Home') return '/stargazers';
-    return '/stargazers/' + pageName.toLowerCase().replace(/ /g, '-');
+    const path = pageName.toLowerCase().replace(/ /g, '-');
+    if (path === 'home') return '/stargazers';
+    return '/stargazers/' + path.replace("detail", "");
 }
